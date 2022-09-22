@@ -1,34 +1,38 @@
 <script setup>
-import BootcampLogo from "./assets/svg/BootcampLogo.vue"
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
-<template>
-	<div>
-		<BootcampLogo />
-		<br />
-		<a href="https://vitejs.dev" target="_blank">
-			<img src="/vite.svg" class="logo" alt="Vite logo" />
-		</a>
-		<a href="https://vuejs.org/" target="_blank">
-			<img src="/vue.svg" class="logo vue" alt="Vue logo" />
-		</a>
-	</div>
-	<HelloWorld msg="Vite + Vue" />
-</template>
-
-<style scoped>
-.logo {
-	height: 6em;
-	padding: 1.5em;
-	will-change: filter;
-}
-
-.logo:hover {
-	filter: drop-shadow(0 0 2em #646cffaa);
-}
-
-.logo.vue:hover {
-	filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+	import { onMounted, ref } from 'vue'
+	import MainComponent from './components/MainComponent.vue'
+	import DATA from './assets/data/data.json'
+	import MemberOfStudent from './components/Students/MemberOfStudent.vue'
+	
+	const allData = ref([]);
+	const groupNames = ref([]);
+	const groupPeople = ref([]);
+	const getData = async (data) => {
+		allData.value = await data;
+		}
+	
+	const getNamesOfGroups = async (data) => {
+		const names_of_groups = await data.map(data_of_student => data_of_student.group)
+		const unique_names_of_groups = [...new Set(names_of_groups)]
+		groupNames.value = unique_names_of_groups;
+		console.log(groupNames.value)
+	}
+	
+	const filterByGroupNames = (groupName) => {
+		groupPeople.value = allData.value.filter(people => people.group === groupName)
+	}
+	
+	
+	onMounted( () => {
+		getData(DATA)
+		getNamesOfGroups(DATA)
+	});
+	</script>
+	
+	
+	<template>
+	
+	<MainComponent :groupNames="groupNames" @getPeople="filterByGroupNames"/>
+	<MemberOfStudent :groupPeople="groupPeople"/>
+	
+	</template>
