@@ -22,13 +22,11 @@
 		groupPeople.value = allData.value.filter(people => people.group === groupName)
 	}
 	
-	
 	onMounted( () => {
 		getData(DATA)
 		getNamesOfGroups(DATA)
 	});
 	</script>
-	
 	
 	<template>
 	
