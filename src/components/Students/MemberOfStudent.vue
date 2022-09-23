@@ -15,7 +15,6 @@ const props = defineProps(["groupPeople"])
 			{{ people.type == null ? "Student" : "Assistant" }}
 		</div>
 	</div>
-
 	</div>
 
 </template>
