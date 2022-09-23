@@ -14,10 +14,8 @@ const getPeople = (group) => {
 		<ul class="group-list">
 			<li v-for="group in props.groupNames" @click="getPeople(group)">
 				{{group}}
-				
 			</li>
-		</ul>
-			
+		</ul>	
 	</div>
 
 </template>
